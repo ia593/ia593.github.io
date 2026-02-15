@@ -1,61 +1,641 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IA593 | Marco de Trabajo en IA - UNL</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portal institucional del proyecto IA593 (UNL, 2025–2027): Marco de Trabajo de IA para fortalecer docencia, investigación, gestión y vinculación, con escalabilidad nacional." />
+
   <style>
-    body { font-family: Arial, sans-serif; margin:0; background:#f4f6f9; }
-    header { background:#002855; color:white; padding:40px; text-align:center; }
-    nav { background:#004080; padding:10px; text-align:center; }
-    nav a { color:white; margin:0 15px; text-decoration:none; font-weight:bold; }
-    section { padding:40px; max-width:1000px; margin:auto; }
-    footer { background:#002855; color:white; text-align:center; padding:20px; }
-    .btn { background:#0073e6; color:white; padding:10px 20px; text-decoration:none; border-radius:5px; }
+    :root{
+      --bg: #0b1220;
+      --panel: #0f1a33;
+      --card: #0e1730;
+      --text: #e9eefc;
+      --muted: #b8c2e6;
+      --brand: #2f7cf6;
+      --brand2:#00c2ff;
+      --line: rgba(255,255,255,.12);
+      --shadow: 0 14px 40px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 22px;
+      --max: 1120px;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 15% 10%, rgba(47,124,246,.35), transparent 60%),
+        radial-gradient(700px 400px at 80% 15%, rgba(0,194,255,.22), transparent 60%),
+        radial-gradient(700px 450px at 50% 95%, rgba(47,124,246,.18), transparent 60%),
+        var(--bg);
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    .container{ max-width: var(--max); margin:0 auto; padding: 0 18px; }
+
+    /* Topbar */
+    .topbar{
+      position: sticky;
+      top:0;
+      z-index: 50;
+      background: rgba(11,18,32,.72);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 0;
+      gap:12px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 240px;
+    }
+    .logo{
+      width:38px;height:38px;border-radius:12px;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      box-shadow: 0 10px 22px rgba(47,124,246,.25);
+      display:grid; place-items:center;
+      font-weight:800;
+      letter-spacing:.5px;
+    }
+    .brand h1{
+      margin:0;
+      font-size: 14px;
+      line-height: 1.2;
+      letter-spacing:.3px;
+    }
+    .brand p{
+      margin:0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .nav{
+      display:flex; flex-wrap:wrap;
+      gap: 10px;
+      justify-content:flex-end;
+    }
+    .nav a{
+      padding: 9px 10px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      color: var(--muted);
+      font-size: 13px;
+      transition: .2s ease;
+    }
+    .nav a:hover{
+      color: var(--text);
+      border-color: var(--line);
+      background: rgba(255,255,255,.04);
+    }
+
+    /* Hero */
+    .hero{
+      padding: 44px 0 24px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .hero-card{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border-radius: var(--radius2);
+      padding: 26px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow:hidden;
+    }
+    .badge{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.03);
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .hero h2{
+      margin: 0 0 12px;
+      font-size: 34px;
+      line-height: 1.1;
+      letter-spacing:.2px;
+    }
+    .hero p{
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height: 1.55;
+      max-width: 62ch;
+    }
+    .cta{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      align-items:center;
+      margin-top: 12px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      font-weight: 650;
+      font-size: 14px;
+      transition: .2s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.07); }
+    .btn.primary{
+      border: 0;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color:#071024;
+      box-shadow: 0 12px 28px rgba(47,124,246,.25);
+    }
+    .btn.primary:hover{ filter: brightness(1.05); }
+
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+    .pill{
+      padding: 7px 10px;
+      border:1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(0,0,0,.14);
+    }
+
+    /* Right hero panel */
+    .side{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius2);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+    .side h3{
+      margin: 4px 0 6px;
+      font-size: 15px;
+      letter-spacing:.2px;
+    }
+    .kpi{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.14);
+      border-radius: 16px;
+      padding: 14px;
+    }
+    .kpi strong{
+      display:block;
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+    .kpi span{
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.35;
+      display:block;
+    }
+    .linklist{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.14);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .linklist a{
+      display:flex;
+      justify-content:space-between;
+      padding: 10px 10px;
+      border-radius: 12px;
+      color: var(--muted);
+      transition: .2s ease;
+      border: 1px solid transparent;
+    }
+    .linklist a:hover{
+      color: var(--text);
+      border-color: var(--line);
+      background: rgba(255,255,255,.04);
+    }
+
+    /* Sections */
+    section{ padding: 26px 0; }
+    .section-title{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .section-title h3{
+      margin:0;
+      font-size: 18px;
+      letter-spacing:.2px;
+    }
+    .section-title p{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .grid-4{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .grid-3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .card{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.22);
+      transition: .2s ease;
+      min-height: 150px;
+    }
+    .card:hover{ transform: translateY(-2px); background: rgba(255,255,255,.05); }
+
+    .card h4{ margin: 6px 0 8px; font-size: 15px; }
+    .card p{ margin:0; color: var(--muted); font-size: 13px; line-height:1.5; }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.12);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .split{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* Footer */
+    footer{
+      border-top: 1px solid var(--line);
+      padding: 24px 0 34px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .footer-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 12px;
+      align-items:start;
+    }
+    .small{ font-size: 12px; color: var(--muted); line-height:1.6; }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .grid-4{ grid-template-columns: 1fr 1fr; }
+      .grid-3{ grid-template-columns: 1fr; }
+      .split{ grid-template-columns: 1fr; }
+      .brand{ min-width: unset; }
+    }
+    @media (max-width: 560px){
+      .grid-4{ grid-template-columns: 1fr; }
+      .hero h2{ font-size: 28px; }
+    }
   </style>
 </head>
+
 <body>
 
-<header>
-  <h1>IA593</h1>
-  <h2>Marco de Trabajo de Inteligencia Artificial</h2>
-  <p>Universidad Nacional de Loja (2025–2027)</p>
-</header>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="logo">IA</div>
+          <div>
+            <h1>IA593 · UNL</h1>
+            <p>Marco de Trabajo de IA (2025–2027)</p>
+          </div>
+        </div>
 
-<nav>
-  <a href="#proyecto">Proyecto</a>
-  <a href="#objetivos">Objetivos</a>
-  <a href="docs/">Documentación</a>
-  <a href="#contacto">Contacto</a>
-</nav>
+        <nav class="nav" aria-label="Navegación principal">
+          <a href="#proyecto">Proyecto</a>
+          <a href="#funciones">Funciones sustantivas</a>
+          <a href="docs/">Documentación</a>
+          <a href="#productos">Productos</a>
+          <a href="#publicaciones">Publicaciones</a>
+          <a href="#contacto">Contacto</a>
+        </nav>
+      </div>
+    </div>
+  </div>
 
-<section id="proyecto">
-  <h2>Sobre el Proyecto</h2>
-  <p>
-    Desarrollo de un marco de trabajo de Inteligencia Artificial para integrar 
-    y fortalecer las funciones sustantivas en la Universidad Nacional de Loja 
-    y su escalabilidad en las Universidades Públicas del Ecuador.
-  </p>
-</section>
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container">
+      <div class="hero-grid">
 
-<section id="objetivos">
-  <h2>Objetivo General</h2>
-  <p>
-    Diseñar un marco metodológico, tecnológico y ético para la adopción responsable 
-    de la IA en docencia, investigación, gestión y vinculación.
-  </p>
-  <br>
-  <a class="btn" href="docs/">Ver documentación técnica</a>
-</section>
+        <div class="hero-card">
+          <div class="badge">📌 Proyecto institucional · Universidad Nacional de Loja</div>
 
-<section id="contacto">
-  <h2>Contacto</h2>
-  <p>Grupo de Investigación GITIC - Carrera de Computación - UNL</p>
-</section>
+          <h2>IA593: Marco de Trabajo de Inteligencia Artificial para fortalecer la UNL y escalar a universidades públicas del Ecuador</h2>
 
-<footer>
-  © 2026 IA593 - Universidad Nacional de Loja
-</footer>
+          <p>
+            Portal oficial del proyecto de investigación (2025–2027) orientado a integrar la IA de forma
+            <strong>responsable, ética y medible</strong> en las funciones sustantivas:
+            docencia, investigación, gestión y vinculación; con una guía de escalabilidad nacional.
+          </p>
+
+          <div class="cta">
+            <a class="btn primary" href="docs/">📚 Ver documentación técnica</a>
+            <a class="btn" href="#productos">🧩 Productos</a>
+            <a class="btn" href="#publicaciones">📰 Publicaciones</a>
+            <a class="btn" href="#repos">💻 Repositorios</a>
+          </div>
+
+          <div class="meta">
+            <span class="pill">Grupo: GITIC · Carrera de Computación</span>
+            <span class="pill">Código: 32-DI-FEIRNR-2025</span>
+            <span class="pill">ODS: 4 · 9 · 10</span>
+          </div>
+        </div>
+
+        <aside class="side" aria-label="Panel de acceso rápido">
+          <h3>Acceso rápido</h3>
+
+          <div class="kpi">
+            <strong>2025–2027</strong>
+            <span>Horizonte de ejecución del proyecto y producción de resultados verificables.</span>
+          </div>
+
+          <div class="kpi">
+            <strong>4 funciones</strong>
+            <span>Docencia · Investigación · Gestión · Vinculación (con enfoque transversal).</span>
+          </div>
+
+          <div class="linklist">
+            <a href="docs/">
+              <span>📘 Documentación (MkDocs)</span>
+              <span>→</span>
+            </a>
+            <a href="#funciones">
+              <span>🧭 Modelo operativo</span>
+              <span>→</span>
+            </a>
+            <a href="#productos">
+              <span>🧰 Productos y entregables</span>
+              <span>→</span>
+            </a>
+            <a href="#contacto">
+              <span>✉️ Contacto institucional</span>
+              <span>→</span>
+            </a>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Proyecto -->
+  <section id="proyecto">
+    <div class="container">
+      <div class="section-title">
+        <div>
+          <h3>Proyecto</h3>
+          <p>Propósito, alcance y enfoque estratégico</p>
+        </div>
+        <span class="tag">🏛️ Portal institucional + 📚 manual técnico</span>
+      </div>
+
+      <div class="split">
+        <div class="card">
+          <h4>Propósito</h4>
+          <p>
+            Diseñar e implementar un marco de trabajo que permita adoptar IA de forma responsable,
+            asegurando gobernanza, ética, arquitectura tecnológica, evaluación e indicadores, y un
+            mecanismo de escalabilidad a universidades públicas del país.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4>Enfoque</h4>
+          <p>
+            El marco se estructura en capas: <strong>normativa</strong> (cumplimiento),
+            <strong>gobernanza</strong> (roles y control), <strong>tecnología</strong> (arquitectura e integración),
+            e <strong>implementación</strong> (pilotos, despliegue, mejora continua), con evaluación permanente.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Funciones sustantivas -->
+  <section id="funciones">
+    <div class="container">
+      <div class="section-title">
+        <div>
+          <h3>Funciones sustantivas fortalecidas con IA</h3>
+          <p>Casos de uso y componentes del marco aplicados a la UNL</p>
+        </div>
+        <a class="btn" href="docs/">Ver el modelo completo →</a>
+      </div>
+
+      <div class="grid-4">
+        <div class="card">
+          <span class="tag">🎓 Docencia</span>
+          <h4>Aprendizaje con salvaguardas</h4>
+          <p>Apoyo a planificación, evaluación, tutoría y recursos, evitando dependencia cognitiva y cuidando integridad académica.</p>
+        </div>
+
+        <div class="card">
+          <span class="tag">🔬 Investigación</span>
+          <h4>Productividad con transparencia</h4>
+          <p>Soporte a RSL, análisis y redacción científica con declaración de uso de IAGen y verificación metodológica.</p>
+        </div>
+
+        <div class="card">
+          <span class="tag">⚙️ Gestión</span>
+          <h4>Decisiones basadas en datos</h4>
+          <p>Automatización y analítica para procesos institucionales, con trazabilidad, seguridad y auditoría.</p>
+        </div>
+
+        <div class="card">
+          <span class="tag">🤝 Vinculación</span>
+          <h4>Transferencia e impacto</h4>
+          <p>Soluciones, capacitación y servicios a la comunidad, con reportabilidad e indicadores de impacto social.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Productos -->
+  <section id="productos">
+    <div class="container">
+      <div class="section-title">
+        <div>
+          <h3>Productos y entregables</h3>
+          <p>Resultados verificables del proyecto (documentación + instrumentos + plataforma)</p>
+        </div>
+        <a class="btn" href="docs/08-productos/">Ver detalle en documentación →</a>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <h4>📘 Marco IA593 (Guía)</h4>
+          <p>Documento vivo con capas normativas, gobernanza, arquitectura e implementación. Diseñado para réplica institucional.</p>
+        </div>
+        <div class="card">
+          <h4>🧪 Instrumentos</h4>
+          <p>Encuestas, entrevistas, matrices e indicadores para diagnóstico, seguimiento y evaluación del grado de adopción de IA.</p>
+        </div>
+        <div class="card">
+          <h4>📊 Plataforma de monitoreo</h4>
+          <p>Seguimiento de casos de uso, métricas, riesgos y cumplimiento, con tableros y reportes para toma de decisiones.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Publicaciones -->
+  <section id="publicaciones">
+    <div class="container">
+      <div class="section-title">
+        <div>
+          <h3>Publicaciones y difusión</h3>
+          <p>Artículos, reportes técnicos y actividades académicas derivadas del proyecto</p>
+        </div>
+        <a class="btn" href="docs/09-publicaciones/">Ver listado →</a>
+      </div>
+
+      <div class="split">
+        <div class="card">
+          <h4>📰 Artículos científicos</h4>
+          <p>Listado de artículos por estado (en preparación / enviado / aceptado / publicado), con venue y año.</p>
+        </div>
+        <div class="card">
+          <h4>🎤 Actividades de divulgación</h4>
+          <p>Conferencias, talleres y eventos de transferencia de conocimiento para la comunidad universitaria y pública.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Repositorios -->
+  <section id="repos">
+    <div class="container">
+      <div class="section-title">
+        <div>
+          <h3>Repositorios</h3>
+          <p>Software, datos, documentación y componentes reutilizables</p>
+        </div>
+        <span class="tag">💻 GitHub · Repos públicos</span>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <h4>Repositorio principal</h4>
+          <p>
+            Sitio web + documentación: <strong>ia593/ia593.github.io</strong><br>
+            <span class="small">Sugerencia: enlazar aquí el repo cuando esté público.</span>
+          </p>
+        </div>
+        <div class="card">
+          <h4>Software / prototipos</h4>
+          <p>
+            Repos recomendados: <strong>ia593-software</strong>, <strong>ia593-platform</strong>, <strong>ia593-rag</strong>.
+          </p>
+        </div>
+        <div class="card">
+          <h4>Datos / instrumentos</h4>
+          <p>
+            Repos recomendados: <strong>ia593-instrumentos</strong>, <strong>ia593-datasets</strong>,
+            con control de acceso si aplica.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto">
+    <div class="container">
+      <div class="section-title">
+        <div>
+          <h3>Contacto</h3>
+          <p>Canal institucional para coordinación, difusión y alianzas</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>GITIC · Carrera de Computación · Universidad Nacional de Loja</h4>
+        <p>
+          Para coordinación académica, vinculación y colaboración interuniversitaria:
+          <br><br>
+          <strong>Correo:</strong> (coloca aquí el correo oficial del proyecto o del grupo) <br>
+          <strong>Ubicación:</strong> Loja, Ecuador
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+            <div class="logo" aria-hidden="true">IA</div>
+            <div>
+              <div style="font-weight:800; letter-spacing:.3px;">IA593 · UNL</div>
+              <div class="small">Portal institucional del Marco de Trabajo de IA (2025–2027)</div>
+            </div>
+          </div>
+          <div class="small">
+            Este sitio integra una vitrina institucional (HTML) y documentación técnica (MkDocs) para
+            apoyar la adopción responsable, ética y evaluable de IA en educación superior pública.
+          </div>
+        </div>
+        <div class="small">
+          <strong>Accesos</strong><br>
+          <a href="docs/">Documentación técnica</a> ·
+          <a href="#productos">Productos</a> ·
+          <a href="#publicaciones">Publicaciones</a> ·
+          <a href="#contacto">Contacto</a>
+          <br><br>
+          © 2026 · IA593 · Universidad Nacional de Loja
+        </div>
+      </div>
+    </div>
+  </footer>
 
 </body>
 </html>
